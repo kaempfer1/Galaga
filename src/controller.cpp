@@ -5,7 +5,7 @@
 void Controller::HandleInput(bool &running, Ship &player) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
-    if (e.type == SDL_QUIT) {
+    if (e.type == SDL_QUIT || player.lives < 0) {
       running = false;
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
@@ -19,14 +19,16 @@ void Controller::HandleInput(bool &running, Ship &player) const {
           break;
 
         case SDLK_RIGHT:                           // Right arrow key moves right
-        case SDLK_LALT:                            // Left ALT Key moves right
+        case SDLK_LALT:                            // Left ALT Key also moves right
           player.direction = Ship::Direction::kRight;
+          break;
+        case SDLK_a:
+          player.attack = true;
           break;
       }
     }
     else if (e.type == SDL_KEYUP) {
       player.direction = Ship::Direction::kStop;
-      player.fire = false;
     }
   }
 }

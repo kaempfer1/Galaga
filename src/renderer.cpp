@@ -95,7 +95,6 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-//void Renderer::Render(Ship const player, Missile const missile, SDL_Point const &food, int const score) {
 //void Renderer::Render(Ship const player, int const score) {
 //void Renderer::Render(Ship const player) {
 void Renderer::Render(Ship player, Enemy enemies) {
@@ -116,25 +115,26 @@ void Renderer::Render(Ship player, Enemy enemies) {
   std::string str = std::to_string(player.score) + "     " + std::to_string(player.highscore);
   surface = TTF_RenderText_Solid(font, str.c_str(), white);
   texture = SDL_CreateTextureFromSurface(sdl_renderer, surface);
-  rect.x = 104;
+  rect.x = 90;
   rect.y = 32;
   rect.w = 280;
   SDL_FreeSurface(surface);
   SDL_RenderCopy(sdl_renderer, texture, NULL, &rect);
 
   // Render Galaga sprites
-  rect.w = kSpriteScale;                                        // Standard sprite width & height
+  rect.w = kSpriteScale;                                                // Standard sprite width & height
   rect.h = kSpriteScale;
 
   // Render the active player ship & the player lives ships
   if (player.alive) {
     rect = player.GetRect();
-    SDL_RenderCopy(sdl_renderer, galaga_texture, &ship_sprite, &rect);  // Render texture
+    sprite = player.sprite;
+    SDL_RenderCopy(sdl_renderer, galaga_texture, &sprite, &rect);         // Render texture
 
-    rect.x = 6;                                               // Location of # of lives
+    rect.x = 6;                                                         // Location of # of lives
     rect.y = 756;
     for (int i = 0 ; i < (player.lives); i++) {
-      SDL_RenderCopy(sdl_renderer, galaga_texture, &lives_sprite, &rect);  // Render texture
+      SDL_RenderCopy(sdl_renderer, galaga_texture, &lives_sprite, &rect); // Render texture
       rect.x += kSpriteScale;
     }      
   }
@@ -144,98 +144,31 @@ void Renderer::Render(Ship player, Enemy enemies) {
   rect.y = 756;
   rect.w = kSpriteScale / 2;
   for (int i = 0 ; i < (player.level); i++) {
-    SDL_RenderCopy(sdl_renderer, galaga_texture, &level_sprite, &rect);      // Render texture
+    SDL_RenderCopy(sdl_renderer, galaga_texture, &level_sprite, &rect);   // Render texture
     rect.x -= 23;
   }
 
-  // *** Render BOSS bugs ***
-  for (int i = 0 ; i < Enemy::MAX_BOSS_BUGS; i++) {
-    if (enemies.boss_bugs[i].Active()) {
-      rect = enemies.boss_bugs[i].GetRect();
-      switch (enemies.boss_bugs[i].hit) {
-        case 0:
-          sprite = boss_sprite;
-          break;
-        case 1:
-          sprite = explode_1_sprite;
-          break;
-        case 2:
-          sprite = explode_2_sprite;
-          break;
-        case 3:
-          sprite = explode_3_sprite;
-          break;
-        case 4:
-          sprite = explode_4_sprite;
-          break;
-      }
-      if (!enemies.boss_bugs[i].shield) {
-          sprite = boss_blue_sprite;
-      }
-      SDL_RenderCopy(sdl_renderer, galaga_texture, &sprite, &rect);     // Render ship texture
+  // *** Render enemy bugs and missiles ***
+  for (int i = 0 ; i < Enemy::HIVE_SIZE; i++) {
+    if (enemies.bugs[i].Active()) {
+      rect = enemies.bugs[i].GetRect();
+      sprite = enemies.bugs[i].sprite;
+      angle = enemies.bugs[i].angle;
+      SDL_RenderCopyEx(sdl_renderer, galaga_texture, &sprite, &rect, angle, NULL, SDL_FLIP_NONE);       // Render texture
     }
-  }
-    
-  // Render RED bugs
-  for (int i = 0 ; i < Enemy::MAX_RED_BUGS; i++) {
-    if (enemies.red_bugs[i].Active()) {
-      rect = enemies.red_bugs[i].GetRect();
-      switch (enemies.red_bugs[i].hit) {
-        case 0:
-          sprite = red_sprite;
-          break;
-        case 1:
-          sprite = explode_1_sprite;
-          break;
-        case 2:
-          sprite = explode_2_sprite;
-          break;
-        case 3:
-          sprite = explode_3_sprite;
-          break;
-        case 4:
-          sprite = explode_4_sprite;
-          break;
-      }
-      SDL_RenderCopy(sdl_renderer, galaga_texture, &sprite, &rect);     // Render ship texture
+    if (enemies.bugs[i].missile.Active()) {
+      rect = enemies.bugs[i].missile.GetRect();
+      sprite = enemies.bugs[i].sprite;
+      SDL_RenderCopy(sdl_renderer, galaga_texture, &sprite, &rect);
     }
   }
 
-  // Render YELLOW bugs
-  for (int i = 0 ; i < Enemy::MAX_YELLOW_BUGS; i++) {
-    if (enemies.yellow_bugs[i].Active()) {
-      rect = enemies.yellow_bugs[i].GetRect();
-      switch (enemies.yellow_bugs[i].hit) {
-        case 0:
-          sprite = yellow_sprite;
-          break;
-        case 1:
-          sprite = explode_1_sprite;
-          break;
-        case 2:
-          sprite = explode_2_sprite;
-          break;
-        case 3:
-          sprite = explode_3_sprite;
-          break;
-        case 4:
-          sprite = explode_4_sprite;
-          break;
-      }
-      SDL_RenderCopy(sdl_renderer, galaga_texture, &sprite, &rect);     // Render ship texture
-    }
-
-//    if (enemies.yellow_bugs[i].alive) {
-//      rect = enemies.yellow_bugs[i].GetRect();
-//      SDL_RenderCopy(sdl_renderer, galaga_texture, &yellow_sprite, &rect);     // Render ship texture
-//    }
-  }
-
-  // Render missiles
+  // Render player ship missiles
   for(int i = 0; i < Ship::MAX_MISSILES; i++) {
     if (player.missiles[i].Active()) {
       rect = player.missiles[i].GetRect();
-      SDL_RenderCopy(sdl_renderer, galaga_texture, &up_missile_sprite, &rect);
+      sprite = player.missiles[i].sprite;
+      SDL_RenderCopy(sdl_renderer, galaga_texture, &sprite, &rect);
     }
   }
 

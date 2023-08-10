@@ -2,44 +2,46 @@
 #include <iostream>
 
 void Collision::Update(Ship &player, Enemy &enemies) {
-  for(int i = 0; i < Ship::MAX_MISSILES; i++) {
+  SDL_Rect ship;
+  SDL_Rect missile;
+  SDL_Rect enemy;
+
+  ship = player.GetRect();
+  for (int j = 0 ; j < Enemy::HIVE_SIZE; j++) {       // Check for enemy missile collision with ship
+    if (enemies.bugs[j].missile.Active()) {
+      missile = enemies.bugs[j].missile.GetRect();
+      if (SDL_HasIntersection(&missile, &ship)) {
+        player.Hit();
+        enemies.bugs[j].missile.Active(false);
+      }
+    }
+    if (enemies.bugs[j].alive) {                      // Check for enemy bug collision with ship
+      enemy = enemies.bugs[j].GetRect();
+      if (SDL_HasIntersection(&enemy, &ship)) {
+        player.Hit();
+        enemies.bugs[j].hit++;
+        if (enemies.bugs[j].hit == 1)
+          player.score += enemies.bugs[j].Score();
+      }
+    }
+  }
+  for(int i = 0; i < Ship::MAX_MISSILES; i++) {       // Check for ship missile collision with bug
     if (player.missiles[i].Active()) {
-      SDL_Rect missile;
       missile = player.missiles[i].GetRect();
-      SDL_Rect enemy;
-      for (int j = 0 ; j < Enemy::MAX_YELLOW_BUGS; j++) {
-        if (enemies.yellow_bugs[j].alive) {
-          enemy = enemies.yellow_bugs[j].GetRect();
+      for (int j = 0 ; j < Enemy::HIVE_SIZE; j++) {
+        if (enemies.bugs[j].alive) {
+          enemy = enemies.bugs[j].GetRect();
           if (SDL_HasIntersection(&enemy, &missile)) {
             player.missiles[i].Active(false);
-            enemies.yellow_bugs[j].Hit();
-            player.score += Enemy::YELLOW_SCORE;
-          }
-        }
-      }
-      for (int j = 0 ; j < Enemy::MAX_RED_BUGS; j++) {
-        if (enemies.red_bugs[j].alive) {
-          enemy = enemies.red_bugs[j].GetRect();
-          if (SDL_HasIntersection(&enemy, &missile)) {
-            player.missiles[i].Active(false);
-            enemies.red_bugs[j].Hit();
-            player.score += Enemy::RED_SCORE;
-          }
-        }
-      }
-      for (int j = 0 ; j < Enemy::MAX_BOSS_BUGS; j++) {
-        if (enemies.boss_bugs[j].alive) {
-          enemy = enemies.boss_bugs[j].GetRect();
-          if (SDL_HasIntersection(&enemy, &missile)) {
-            player.missiles[i].Active(false);
-            if (!enemies.boss_bugs[j].shield)
-              player.score += Enemy::BOSS_SCORE;
-            enemies.boss_bugs[j].Hit();
+            if (!enemies.bugs[j].shield) {
+              player.score += enemies.bugs[j].Score();
+            }
+            enemies.bugs[j].Hit();
           }
         }
       }
     }
-  }
+  } 
 }
 
 
@@ -55,6 +57,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+  Uint32 level_start;
 
   while (running) {
     frame_start = SDL_GetTicks();
@@ -62,7 +65,6 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, player);
     Update();
-//    renderer.Render(player, missile, food, score);
     renderer.Render(player, enemies);
 
     frame_end = SDL_GetTicks();
@@ -89,6 +91,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::Update() {
+  std::mt19937 engine(dev());
+  std::uniform_int_distribution<int> random_bug(0, 39);
+  
   if (!player.alive) return;
 
   player.Update();
@@ -96,6 +101,11 @@ void Game::Update() {
     enemies.Update();
     collision.Update(player, enemies);
     if (player.score > player.highscore) player.highscore = player.score;
+    if (player.attack) {                  // DEBUG
+      int x = random_bug(engine);
+      enemies.bugs[x].attack = true;
+      player.attack = false;
+    }
   } else {
     enemies.Start();
     player.level++;

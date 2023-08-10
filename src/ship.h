@@ -6,7 +6,7 @@
 
 class Missile {
   public:
-    Missile() {}
+    Missile();
     ~Missile() {}
 
     bool Active();
@@ -15,6 +15,7 @@ class Missile {
     SDL_Rect GetRect() const;                       // Get the Rect of sprite
     void Hit(bool hit);
 
+    SDL_Rect sprite;
     float speed{12.0f};
     bool alive{false};
     int x;
@@ -23,26 +24,33 @@ class Missile {
     int h = kSpriteScale;
 
   private:
-    const static std::size_t kSpriteScale{42};      // Scale factor for sprites to game screen
+    const static std::size_t kSpriteSize{16};               // Galage sprite size in pixels
+    const static std::size_t kSpriteScale{42};              // Scale factor for sprites to game screen
+    SDL_Rect up_missile_sprite{313, 118, 3, kSpriteSize };  // Up missile
 };
 
 class Ship {
   public:
     enum class Direction { kLeft, kRight, kStop };
 
-  Ship() {}
+  Ship();
   ~Ship() {}
 
   void Update();
+  void Start();
+  void Hit();
+  bool Die();
   SDL_Rect GetRect() const;                       // Get the Rect of sprite
 
   Direction direction = Direction::kStop;
 
+  SDL_Rect sprite;
   float speed{4.0f};
   int size{1};                                    // Size of active shipe (1 or 2)
   int lives{2};                                   // Total # of player lives
   bool alive{true};
   bool fire{false};
+  bool attack{false};                             // DEBUG 
   int x = 281;
   int y = 708;
   int w = kSpriteScale;
@@ -55,7 +63,16 @@ class Ship {
   Missile missiles[MAX_MISSILES];
 
  private:
+  int hit{0};                                     // Keep track of the die process
+
   const static std::size_t kSpriteScale{42};      // Scale factor for sprites to game screen
+  const static std::size_t kSpriteSize{16};                 // Galage sprite size in pixels
+
+  SDL_Rect ship_sprite{109, 1, kSpriteSize, kSpriteSize};           // Active player ship
+  SDL_Rect explode_1_sprite{145, 1, kSpriteSize*2, kSpriteSize*2};  // Ship die sprite 1
+  SDL_Rect explode_2_sprite{179, 1, kSpriteSize*2, kSpriteSize*2};  // Ship die sprite 2
+  SDL_Rect explode_3_sprite{213, 1, kSpriteSize*2, kSpriteSize*2};  // Ship die sprite 3
+  SDL_Rect explode_4_sprite{247, 1, kSpriteSize*2, kSpriteSize*2};  // Ship die sprite 4
 };
 
 #endif
