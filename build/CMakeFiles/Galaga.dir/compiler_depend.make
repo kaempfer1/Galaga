@@ -1590,7 +1590,8 @@ CMakeFiles/Galaga.dir/src/enemy.cpp.o: /Volumes/T7\ Shield/udacity/Galaga/src/en
   /Library/Frameworks/SDL2.framework/Headers/SDL_video.h \
   /Library/Frameworks/SDL2.framework/Headers/begin_code.h \
   /Library/Frameworks/SDL2.framework/Headers/close_code.h \
-  /Volumes/T7\ Shield/udacity/Galaga/src/enemy.h
+  /Volumes/T7\ Shield/udacity/Galaga/src/enemy.h \
+  /Volumes/T7\ Shield/udacity/Galaga/src/ship.h
 
 CMakeFiles/Galaga.dir/src/game.cpp.o: /Volumes/T7\ Shield/udacity/Galaga/src/game.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/Availability.h \

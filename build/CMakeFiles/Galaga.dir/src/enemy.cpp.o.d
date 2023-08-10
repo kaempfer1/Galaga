@@ -792,4 +792,5 @@ CMakeFiles/Galaga.dir/src/enemy.cpp.o: \
   /Library/Frameworks/SDL2.framework/Headers/SDL_timer.h \
   /Library/Frameworks/SDL2.framework/Headers/SDL_version.h \
   /Library/Frameworks/SDL2.framework/Headers/SDL_locale.h \
-  /Library/Frameworks/SDL2.framework/Headers/SDL_misc.h
+  /Library/Frameworks/SDL2.framework/Headers/SDL_misc.h \
+  /Volumes/T7\ Shield/udacity/Galaga/src/ship.h
