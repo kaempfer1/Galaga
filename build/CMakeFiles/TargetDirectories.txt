@@ -1,3 +1,0 @@
-/Volumes/T7 Shield/udacity/Galaga/build/CMakeFiles/Galaga.dir
-/Volumes/T7 Shield/udacity/Galaga/build/CMakeFiles/edit_cache.dir
-/Volumes/T7 Shield/udacity/Galaga/build/CMakeFiles/rebuild_cache.dir
