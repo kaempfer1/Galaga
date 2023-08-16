@@ -794,6 +794,7 @@ CMakeFiles/Galaga.dir/src/main.cpp.o: \
   /Library/Frameworks/SDL2.framework/Headers/SDL_version.h \
   /Library/Frameworks/SDL2.framework/Headers/SDL_locale.h \
   /Library/Frameworks/SDL2.framework/Headers/SDL_misc.h \
+  /Library/Frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h \
   /Volumes/T7\ Shield/udacity/Galaga/src/game.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/random \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__random/bernoulli_distribution.h \
@@ -846,5 +847,4 @@ CMakeFiles/Galaga.dir/src/main.cpp.o: \
   /Volumes/T7\ Shield/udacity/Galaga/src/renderer.h \
   /Volumes/T7\ Shield/udacity/Galaga/src/enemy.h \
   /Library/Frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h \
-  /Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h \
-  /Library/Frameworks/SDL2_mixer.framework/Versions/A/Headers/SDL_mixer.h
+  /Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h

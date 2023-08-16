@@ -812,8 +812,11 @@ CMakeFiles/Galaga.dir/src/game.cpp.o: \
   /Library/Frameworks/SDL2.framework/Headers/SDL_misc.h \
   /Volumes/T7\ Shield/udacity/Galaga/src/controller.h \
   /Volumes/T7\ Shield/udacity/Galaga/src/ship.h \
+  /Library/Frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h \
   /Volumes/T7\ Shield/udacity/Galaga/src/renderer.h \
   /Volumes/T7\ Shield/udacity/Galaga/src/enemy.h \
+  /Library/Frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h \
+  /Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/ios \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__locale \
@@ -844,7 +847,4 @@ CMakeFiles/Galaga.dir/src/game.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/streambuf \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/nl_types.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/_types/_nl_item.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
-  /Library/Frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h \
-  /Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h \
-  /Library/Frameworks/SDL2_mixer.framework/Versions/A/Headers/SDL_mixer.h
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__bsd_locale_defaults.h

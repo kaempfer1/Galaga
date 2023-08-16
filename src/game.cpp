@@ -32,9 +32,12 @@ void Collision::Update(Ship &player, Enemy &enemies) {
         if (enemies.bugs[j].alive) {
           enemy = enemies.bugs[j].GetRect();
           if (SDL_HasIntersection(&enemy, &missile)) {
-            player.missiles[i].Active(false);
-            if (!enemies.bugs[j].shield) {
-              player.score += enemies.bugs[j].Score();
+            player.missiles[i].Active(false);               // Set missile inactive
+            if (!enemies.bugs[j].shield) {                  // If bug doesn't have a shield, it's dead
+              if (enemies.bugs[j].attack)                   // If bug is flying, it's worth double score
+                player.score += 2 * enemies.bugs[j].Score();
+              else player.score += enemies.bugs[j].Score();
+              
             }
             enemies.bugs[j].Hit();
           }
@@ -44,10 +47,29 @@ void Collision::Update(Ship &player, Enemy &enemies) {
   } 
 }
 
-
 Game::Game()
-    : player(),
-      engine(dev()) {}
+    : player() {}
+
+void Game::PlaySound() {
+  if (stage_sound == NULL) {
+    stage_sound = Mix_LoadMUS("../resources/Stage_Flag.wav");
+    if (stage_sound == NULL) {
+      std::cerr << "Mix_LoadWAV could not load file.\n";
+      std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+    }
+  }
+  if (Mix_PlayMusic(stage_sound, 0) < 0) {
+    std::cerr << "Mix_PlayChannel could not play file.\n";
+    std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+  }
+}
+
+void Game::StartStage() {
+    timer = 0;
+    player.stage_start = false;
+    enemies.Start();
+    enemies.max_attackers = player.stage;
+}
 
 void Game::Run(Controller const &controller, Renderer &renderer,
                std::size_t target_frame_duration) {
@@ -91,26 +113,17 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::Update() {
-  std::mt19937 engine(dev());
-  std::uniform_int_distribution<int> random_bug(0, 39);
-  
   if (!player.alive) return;
 
   player.Update();
   if (enemies.hive > 0) {
     enemies.Update();
     collision.Update(player, enemies);
-    if (player.score > player.highscore) player.highscore = player.score;
-    if (player.attack) {                  // DEBUG
-      int x = random_bug(engine);
-      enemies.bugs[x].attack = true;
-      player.attack = false;
-    }
-  } else {
-    enemies.Start();
-    player.level++;
-  }
+  } else if (!timer) {
+    player.stage_start = true;
+    player.stage++;
+    timer = SDL_GetTicks() + delay;
+  } else if (SDL_GetTicks() > timer) StartStage();
 }
 
 int Game::GetScore() const { return player.score; }
-int Game::GetSize() const { return player.size; }
