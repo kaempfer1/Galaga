@@ -24,15 +24,15 @@ This Galaga project addresses the following rubric points for the Udacity capsto
 1. This README file
 2. Code compiles and runs using the the process specified below
 3. Satisfies at least 5 total criteria from the rest of the rubric, specifically:
-  (1) Project demonstrates an understanding of C++ functions and control structures:
+*  (1) Project demonstrates an understanding of C++ functions and control structures:
     - There are numerous function and control examples, including method functions in ship.cpp at lines 43, 90, etc
-  (2) The project reads data from a file and process the data:
+*  (2) The project reads data from a file and process the data:
     - Galaga reads data from sprite and font files to make the game graphics in renderer.cpp at lines 51 and 70
-  (3) The project accepts user input and processes the input:
+*  (3) The project accepts user input and processes the input:
     - Galaga uses keyboard inputs (arrow keys and space bar) to control the player's ship in controller.cpp at lines 5-51
-  (4) The project uses Object Oriented Programming techniques:
+*  (4) The project uses Object Oriented Programming techniques:
     - There are numerous examples of OOP techniques, including the player & missile classes and methods in ship.h at lines 3-30
-  (5) Classes use appropriate access specifiers for class members:
+*  (5) Classes use appropriate access specifiers for class members:
     - There are numerious examples of class member access specifiers, including in ship.h at lines 32-76
 
 ## Dependencies for Running Locally
