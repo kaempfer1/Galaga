@@ -1,4 +1,4 @@
-# CPPND: Capstone - Galaga
+# CPPND: Capstone Project - Galaga
 
 This is a Capstone project for the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
 
@@ -8,7 +8,7 @@ This project is based on the classic arcade game, Galaga, that was developed by 
 the history of the game, including [this](https://strategywiki.org/wiki/Galaga) and [this](http://tips.retrogames.com/gamepage/galaga.html).
 
 The game engine used for this version of Galaga is based on the Snake Game that was provided by Udacity to start this Capstone project.
-The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
+The Snake Game was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
 
 <img src="Galaga.gif"/>
 
@@ -17,7 +17,7 @@ The code for this repo was inspired by [this](https://codereview.stackexchange.c
 2. controller.h and controller.cpp reads the keyboard inputs (arrow keys, space bar, etc) for the player input
 3. ship.h and ship.cpp & enemy.h and enemy.cpp establish the player ship class and the enemy class
 4. renderer.h and renderer.cpp primarily handles the rendering of game graphics to the screen using the Simple DirectMedia Layer (SDL) development library
-5. The resources subfolder contains files for the original Galaga game sprites (GalagaSprites.png) and the True Type Font (emulogic.ttf) to simulate the original game text format. 
+5. The resources subfolder contains files for the original Galaga game sprites (GalagaSprites.png), game sounds (*.wav), and a True Type Font (emulogic.ttf) to simulate the original game text format. 
 
 ## Project Rubric Satisfaction
 This Galaga project addresses the following rubric points for the Udacity capstone project.
@@ -49,6 +49,8 @@ This Galaga project addresses the following rubric points for the Udacity capsto
   * All installation instructions can be found [here](https://wiki.libsdl.org/SDL2_ttf)
 * SDL_image >= 2.0
   * All installation instructions can be found [here](https://wiki.libsdl.org/SDL2_image)
+* SDL_mixer >= 2.0
+  * All installation instructions can be found [here](https://wiki.libsdl.org/SDL2_mixer)
 * gcc/g++ >= 5.4
   * Linux: gcc / g++ is installed by default on most Linux distros
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
